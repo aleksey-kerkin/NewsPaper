@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Sum
-from django.db.models.functions import Coalesce
 
 from news.resourses import POST_TYPE
 
@@ -11,9 +9,18 @@ class Author(models.Model):
     rating = models.IntegerField(default=0)
 
     def update_rating(self):
-        posts_rating = self.posts.aggregate(pr=Coalesce(Sum('rating'), 0))['pr']
-        comments_rating = self.user.comments.aggregate(cr=Coalesce(Sum('rating'), 0))['cr']
-        posts_comment_rating = self.posts.aggregate(pcr=Coalesce(Sum('comment_rating'), 0))['pcr']
+        posts_rating = 0
+        comments_rating = 0
+        posts_comment_rating = 0
+        posts = Post.objects.filter(author=self)
+        for p in posts:
+            posts_rating += p.rating
+        comments = Comment.objects.filter(user=self.user)
+        for c in comments:
+            comments_rating += c.rating
+        posts_comments = Comment.objects.filter(post__author=self)
+        for pc in posts_comments:
+            posts_comment_rating += pc.rating
 
         self.rating = posts_rating * 3 + comments_rating + posts_comment_rating
         self.save()
@@ -26,7 +33,7 @@ class Category(models.Model):
 class Post(models.Model):
     articles = 'AR'
     news = 'NW'
-    author = models.ForeignKey('Author', related_name='posts', on_delete=models.CASCADE)
+    author = models.ForeignKey('Author', on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=POST_TYPE, default=news)
     date_published = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField('Category', through='PostCategory')
@@ -53,7 +60,7 @@ class PostCategory(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
@@ -63,5 +70,5 @@ class Comment(models.Model):
         self.save()
 
     def dislike(self):
-        self.rating += 1
+        self.rating -= 1
         self.save()
