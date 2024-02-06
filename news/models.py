@@ -29,6 +29,9 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32, unique=True)
 
+    def __str__(self):
+        return self.name.title()
+
 
 class Post(models.Model):
     articles = 'AR'
@@ -51,6 +54,9 @@ class Post(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
+    def __str__(self):
+        return f'{self.title.title()}: {self.text[:20]}'
 
 
 class PostCategory(models.Model):

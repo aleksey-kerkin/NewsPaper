@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+    Новости
+{% endblock title %}
+
+{% block content %}
+    {% if posts %}
+        <table>
+            <tr>
+                <td>Заголовок</td></td>
+                <td>Дата публикации</td>
+                <td>Содержание</td>
+                <td>Автор</td>
+            </tr>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.date_published }}</td>
+                    <td>{{ post.preview }}</td>
+                    <td>{{ post.author.user.username }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h1>Пока нет публикаций :(</h1>
+    {% endif %}
+
+{% endblock content %}
