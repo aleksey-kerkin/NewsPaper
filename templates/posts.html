@@ -6,22 +6,32 @@
 
 {% block content %}
     {% if posts %}
-        <table>
-            <tr>
-                <td>Заголовок</td></td>
-                <td>Дата публикации</td>
-                <td>Содержание</td>
-                <td>Автор</td>
-            </tr>
-            {% for post in posts %}
+        <div style="text-align: center">
+            <table style="display: inline-block">
+                <hr>
+                <h4>Всего новостей: {{ posts|length }}</h4>
+                <hr>
                 <tr>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.date_published }}</td>
-                    <td>{{ post.preview }}</td>
-                    <td>{{ post.author.user.username }}</td>
+                    <td style="padding-inline: 5px">Дата публикации:</td>
+                    <td style="padding-inline: 5px">Категория:</td>
+                    <td style="padding-inline: 5px">Заголовок:</td>
+                    <td style="padding-inline: 5px">Содержание:</td>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for post in posts %}
+                    <tr>
+                        <td style="padding-inline: 5px">{{ post.date_published|date:'d.m.Y' }}</td>
+                        <td style="padding-inline: 5px">
+                            {% for cat in post.category.all %}
+                                {{ cat.name }}
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: left; padding-inline: 5px"><a href="{{ post.pk }}">{{ post.title }}</a></td>
+                        <td style="text-align: left; padding-inline: 5px">{{ post.text|truncatechars:20 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr>
+        </div>
     {% else %}
         <h1>Пока нет публикаций :(</h1>
     {% endif %}
