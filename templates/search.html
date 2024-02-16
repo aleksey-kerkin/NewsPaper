@@ -1,10 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-    Новости
+    Поиск постов
 {% endblock title %}
 
 {% block content %}
+    <p>
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти"/>
+    </form>
     {% if posts %}
         <div style="text-align: center">
             <table style="display: inline-block">
@@ -34,7 +39,7 @@
             <hr>
         </div>
     {% else %}
-        <h1>Пока нет публикаций :(</h1>
+        <h1>Ничего не нашлось :(</h1>
     {% endif %}
     {% if page_obj.has_previous %}
         <a href="?page=1">1</a>
