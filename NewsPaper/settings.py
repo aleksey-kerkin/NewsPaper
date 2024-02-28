@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'news',
+    'news.apps.NewsConfig',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_filters',
@@ -102,6 +102,14 @@ ACCOUNT_FORMS = {'signup': 'news.forms.CommonSignupForm'}
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/news/profile/'
 LOGOUT_REDIRECT_URL = '/news/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+SITE_URL = 'http://127.0.0.1:8000'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
 LANGUAGE_CODE = 'ru'
 

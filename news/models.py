@@ -32,9 +32,10 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=32, unique=True)
+    subscribers = models.ManyToManyField(User, blank=True, null=True, related_name='categories')
 
     def __str__(self):
-        return self.name.title()
+        return self.name
 
 
 class Post(models.Model):
@@ -49,7 +50,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     def preview(self):
-        return f'{self.text[:124]}...'
+        return f'{self.text[:50]}...'
 
     def like(self):
         self.rating += 1

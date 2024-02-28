@@ -16,11 +16,9 @@
     <hr>
     <div class="text-center">
         {% if is_not_author %}
-            <button class="btn btn-lg btn-dark"><a style="text-decoration: none; color: white" href="
-{% url 'upgrade' %}">Стать
-                автором</a></button>
+            <button class="btn btn-lg btn-dark"><a style="text-decoration: none; color: white"
+                                                   href="{% url 'upgrade' %}">Стать автором</a></button>
         {% endif %}
-        <button class="btn btn-lg btn-dark"><a style="text-decoration: none; color: white" href="/accounts/logout/">Выйти</a>
-        </button>
+        <button class="btn btn-lg btn-dark"><a style="text-decoration: none; color: white" href="/accounts/logout/">Выйти</a></button>
     </div>
 {% endblock content %}
