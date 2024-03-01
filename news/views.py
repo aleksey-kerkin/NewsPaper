@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -7,7 +9,7 @@ from django.views.generic import (
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Category
+from .models import Post, Category, Author
 from .filters import PostFilter
 from .forms import PostForm
 
@@ -52,8 +54,14 @@ class PostCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         post = form.save(commit=False)
+        form.instance.author = self.request.user.author
+        today = datetime.now()
+        limit = today - timedelta(days=1)
+        count = Post.objects.filter(author=post.author, date_published__gte=limit).count()
         if self.request.path == '/articles/create/':
             post.type = 'AR'
+        if count >= 3:
+            return render(self.request, 'post_create_limit.html')
         post.save()
         return super().form_valid(form)
 
@@ -137,4 +145,5 @@ def upgrade_me(request):
     authors_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         authors_group.user_set.add(user)
+        # TODO Добавить пользователя в сущность Author, т.к. нет доступа к публикации новостей/статей
     return redirect('/news/profile/')
