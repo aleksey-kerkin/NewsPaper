@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Category, Author
 from .filters import PostFilter
 from .forms import PostForm
+from .tasks import inform_about_new_posts
 
 
 class PostView(ListView):
@@ -63,6 +64,7 @@ class PostCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if count >= 3:
             return render(self.request, 'post_create_limit.html')
         post.save()
+        inform_about_new_posts.delay(form.instance.pk)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -145,5 +147,4 @@ def upgrade_me(request):
     authors_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         authors_group.user_set.add(user)
-        # TODO Добавить пользователя в сущность Author, т.к. нет доступа к публикации новостей/статей
     return redirect('/news/profile/')
