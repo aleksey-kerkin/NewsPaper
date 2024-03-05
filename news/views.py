@@ -55,16 +55,19 @@ class PostCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         post = form.save(commit=False)
+        # author = Author.objects.get_or_create(user=self.request.user)[0]
+        author = Author.objects.get(user=self.request.user)
+        # post.author = author
         form.instance.author = self.request.user.author
         today = datetime.now()
         limit = today - timedelta(days=1)
-        count = Post.objects.filter(author=post.author, date_published__gte=limit).count()
+        count = Post.objects.filter(author=author, date_published__gte=limit).count()
         if self.request.path == '/articles/create/':
             post.type = 'AR'
         if count >= 3:
             return render(self.request, 'post_create_limit.html')
         post.save()
-        inform_about_new_posts.delay(form.instance.pk)
+        inform_about_new_posts.delay(post.pk)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -147,4 +150,5 @@ def upgrade_me(request):
     authors_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         authors_group.user_set.add(user)
+        Author.objects.create(user=user)
     return redirect('/news/profile/')
