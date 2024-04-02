@@ -3,20 +3,18 @@ from news.models import Post, Category
 
 
 class Command(BaseCommand):
-    help = (
-        "Удаляет все новости в выбранной категории, указать категорию после команды"
-    )
+    help = "Удаляет все новости в выбранной категории, указать категорию после команды"
 
     def add_arguments(self, parser):
         parser.add_argument("category", type=str)
 
     def handle(self, *args, **options):
         answer = input(
-            f"Вы действительно хотите удалить все статьи в категории\
-                  {options['category']}? yes/no\n"
+            f"Вы действительно хотите удалить все статьи в категории {options['category']}?\n"
+            "Напишите 'Y' или 'yes' чтобы удалить:\n"
         )
 
-        if answer != "yes".lower:
+        if answer != "yes".lower or "Y".lower:
             self.stdout.write(self.style.ERROR("Отменено"))
             return
         try:
