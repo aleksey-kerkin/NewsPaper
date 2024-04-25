@@ -37,6 +37,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -114,10 +115,16 @@ SITE_URL = "http://127.0.0.1:8000"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 LANGUAGE_CODE = "ru"
+LANGUAGES = [
+    ("ru", "Русский"),
+    ("en-us", "English"),
+    ]
 
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]
 
 USE_TZ = True
 

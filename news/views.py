@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils.translation import gettext as _
 
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
@@ -83,9 +84,9 @@ class PostCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def get_type(self):
         if self.request.path == "/articles/create/":
-            return {"title": "Create article", "header": "Добавить статью"}
+            return {"title": _("Создать статью"), "header": _("Добавить статью")}
         else:
-            return {"title": "Create news", "header": "Добавить новость"}
+            return {"title": _("Создать новость"), "header": _("Добавить новость")}
 
 
 class PostEdit(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -141,7 +142,7 @@ def subscribe(request, pk):
     category = Category.objects.get(id=pk)
     category.subscribers.add(user)
 
-    message = "Вы успешно подписались на рассылку категории"
+    message = _("Вы успешно подписались на рассылку категории")
     return render(
         request, "un_subscribe.html", {"category": category, "message": message}
     )
@@ -153,7 +154,7 @@ def unsubscribe(request, pk):
     category = Category.objects.get(id=pk)
     category.subscribers.remove(user)
 
-    message = "Вы успешно отписались от рассылку категории"
+    message = _("Вы успешно отписались от рассылку категории")
     return render(
         request, "un_subscribe.html", {"category": category, "message": message}
     )
