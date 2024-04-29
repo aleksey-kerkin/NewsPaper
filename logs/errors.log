@@ -692,3 +692,60 @@ Traceback (most recent call last):
     raise self.error(
 django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 36: 'trans"Добавить'. Did you forget to register or load this tag?
 25.04.2024 09-07-04 ERROR /home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/core/servers/basehttp.py "GET /articles/ HTTP/1.1" 500 202976 None
+29.04.2024 11-39-00 ERROR /home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/utils/log.py Internal Server Error: /api/v1/authors/ (<class 'django.core.exceptions.ImproperlyConfigured'>, ImproperlyConfigured('Field name `name` is not valid for model `Author` in `news.serializers.AuthorSerializer`.'), <traceback object at 0x7f30c993b240>)
+Traceback (most recent call last):
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/viewsets.py", line 124, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+                                       ^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 795, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 714, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 523, in to_representation
+    for field in fields:
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 384, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 372, in fields
+    for key, value in self.get_fields().items():
+                      ^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 1103, in get_fields
+    field_class, field_kwargs = self.build_field(
+                                ^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 1249, in build_field
+    return self.build_unknown_field(field_name, model_class)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/rest_framework/serializers.py", line 1367, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `name` is not valid for model `Author` in `news.serializers.AuthorSerializer`.
+29.04.2024 11-39-00 ERROR /home/st0rmaen/Documents/Python_code/NewsPaper/.venv/lib64/python3.12/site-packages/django/core/servers/basehttp.py "GET /api/v1/authors/ HTTP/1.1" 500 151624 None

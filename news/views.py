@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from django.utils.translation import gettext as _
 
+from rest_framework import viewsets, permissions
+
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -15,7 +17,15 @@ from django.views.generic import (
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Category, Author
+from .models import Post, Category, Author, User, PostCategory, Comment
+from .serializers import (
+    UserSerializer,
+    AuthorSerializer,
+    CategorySerializer,
+    PostSerializer,
+    PostCategorySerializer,
+    CommentSerializer,
+)
 from .filters import PostFilter
 from .forms import PostForm
 from .tasks import inform_about_new_posts
@@ -168,3 +178,33 @@ def upgrade_me(request):
         authors_group.user_set.add(user)
         Author.objects.create(user=user)
     return redirect("/news/profile/")
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostCategoryViewSet(viewsets.ModelViewSet):
+    queryset = PostCategory.objects.all()
+    serializer_class = PostCategorySerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
