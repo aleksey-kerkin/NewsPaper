@@ -11,6 +11,8 @@ router.register(r"categories", views.CategoryViewSet)
 router.register(r"posts", views.PostViewSet)
 router.register(r"posts_categories", views.PostCategoryViewSet)
 router.register(r"comments", views.CommentViewSet)
+# router.register(r"news_posts", views.NewsViewSet)
+# router.register(r"articles_posts", views.ArticlesViewSet)
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),

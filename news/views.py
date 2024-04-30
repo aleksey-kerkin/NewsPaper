@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils.translation import gettext as _
 
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets  # permissions
 
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404, render
@@ -208,3 +208,13 @@ class PostCategoryViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+
+# class NewsViewSet(viewsets.ModelViewSet):
+#     queryset = Post.objects.filter(type="NW")
+#     serializer_class = PostSerializer
+
+
+# class ArticlesViewSet(viewsets.ModelViewSet):
+#     queryset = Post.objects.filter(type="AR")
+#     serializer_class = PostSerializer
