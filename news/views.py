@@ -210,11 +210,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
 
-# class NewsViewSet(viewsets.ModelViewSet):
-#     queryset = Post.objects.filter(type="NW")
-#     serializer_class = PostSerializer
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type="NW")
+    serializer_class = PostSerializer
 
 
-# class ArticlesViewSet(viewsets.ModelViewSet):
-#     queryset = Post.objects.filter(type="AR")
-#     serializer_class = PostSerializer
+class ArticlesViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type="AR")
+    serializer_class = PostSerializer
